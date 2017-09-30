@@ -1,0 +1,14 @@
+{
+    "name": "uskur/pdf-label",
+    "description": "TCPDF Class to print labels in Avery or custom formats",
+    "require": {
+        "tecnickcom/tcpdf": "^6.2"
+    },
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Burak USGURLU",
+            "email": "burak@uskur.com.tr"
+        }
+    ]
+}
