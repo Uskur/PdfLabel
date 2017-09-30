@@ -9,7 +9,7 @@ namespace Uskur\PdfLabel;
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  *         
  */
-class PdfLabel extends TCPDF
+class PdfLabel extends \TCPDF
 {
 
     /**
@@ -101,7 +101,7 @@ class PdfLabel extends TCPDF
      *
      * @var array
      */
-    public const LABELS = array(
+    const LABELS = array(
         '5160' => array(
             'paper-size' => 'letter',
             'unit' => 'mm',
@@ -247,9 +247,9 @@ class PdfLabel extends TCPDF
             $Tformat = $format;
         } else {
             // Built-in format
-            if (! isset(LABELS[$format]))
-                throw new Exception('Unknown label format: ' . $format);
-            $Tformat = LABELS[$format];
+            if (! isset(PdfLabel::LABELS[$format]))
+                throw new \Exception('Unknown label format: ' . $format);
+            $Tformat = PdfLabel::LABELS[$format];
         }
         
         parent::__construct('P', $unit, $Tformat['paper-size']);
@@ -310,7 +310,7 @@ class PdfLabel extends TCPDF
      */
     public function addLabel($text)
     {
-        list ($width, $height) = $this->_newLabelPosition();
+        list ($width, $height) = $this->newLabelPosition();
         $this->MultiCell($width, $height, $text, 0, 'L');
     }
 
@@ -321,7 +321,7 @@ class PdfLabel extends TCPDF
      */
     public function addHtmlLabel($html)
     {
-        list ($width, $height) = $this->_newLabelPosition();
+        list ($width, $height) = $this->newLabelPosition();
         $this->writeHTMLCell($width, $height, null, null, $html, 1, 0, true);
     }
 
