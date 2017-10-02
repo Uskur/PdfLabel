@@ -322,7 +322,7 @@ class PdfLabel extends \TCPDF
     public function addHtmlLabel($html)
     {
         list ($width, $height) = $this->newLabelPosition();
-        $this->writeHTMLCell($width, $height, null, null, $html, 1, 0, true);
+        $this->writeHTMLCell($width, $height, null, null, $html);
     }
 
     /**
