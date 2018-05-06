@@ -97,6 +97,13 @@ class PdfLabel extends \TCPDF
     protected $yPosition;
 
     /**
+     * Cut lines enabled?
+     *
+     * @var boolean
+     */
+    protected $cutLines;
+
+    /**
      * List of label formats
      *
      * @var array
@@ -221,6 +228,19 @@ class PdfLabel extends \TCPDF
             'SpaceY' => 0,
             'width' => 63.5,
             'height' => 46.6
+        ),
+        '90x54' => array(
+            'paper-size' => 'A4',
+            'unit' => 'mm',
+            'marginLeft' => 15,
+            'marginTop' => 13.5,
+            'NX' => 2,
+            'NY' => 5,
+            'SpaceX' => 0,
+            'SpaceY' => 0,
+            'width' => 90,
+            'height' => 55,
+            'cutLines' => true
         )
     );
 
@@ -235,9 +255,9 @@ class PdfLabel extends \TCPDF
      * @author Burak USGURLU <burak@uskur.com.tr>
      * @param array|string $format
      *            Label type name or dimensions array
-     * @param string $unit            
-     * @param number $posX            
-     * @param number $posY            
+     * @param string $unit
+     * @param number $posX
+     * @param number $posY
      * @throws Exception
      */
     public function __construct($format, $unit = 'mm', $posX = 1, $posY = 1)
@@ -252,7 +272,7 @@ class PdfLabel extends \TCPDF
             $Tformat = PdfLabel::LABELS[$format];
         }
         
-        parent::__construct('P', $unit, $Tformat['paper-size']);
+        parent::__construct('P', $unit, $Tformat['paper-size'], true, 'UTF-8');
         
         $this->setViewerPreferences([
             'PrintScaling' => 'None'
@@ -269,7 +289,7 @@ class PdfLabel extends \TCPDF
     /**
      * Initialize class based on label dimensions
      *
-     * @param array $format            
+     * @param array $format
      */
     protected function setFormat($format)
     {
@@ -281,14 +301,15 @@ class PdfLabel extends \TCPDF
         $this->yNumber = $format['NY'];
         $this->labelWidth = $this->convertUnit($format['width'], $format['unit']);
         $this->labelHeight = $this->convertUnit($format['height'], $format['unit']);
-        $this->labelPadding = $this->convertUnit(3, 'mm');
+        $this->labelPadding = $this->convertUnit(isset($format['padding']) ? $format['padding'] : 3, 'mm');
+        $this->cutLines = isset($format['cutLines']) ? $format['cutLines'] : false;
     }
 
     /**
      * convert units (in to mm, mm to in)
      *
-     * @param float $value            
-     * @param string $src            
+     * @param float $value
+     * @param string $src
      * @return number|unknown
      */
     protected function convertUnit($value, $src)
@@ -306,7 +327,7 @@ class PdfLabel extends \TCPDF
     /**
      * Print label as a TCPDF MultiCell
      *
-     * @param string $text            
+     * @param string $text
      */
     public function addLabel($text)
     {
@@ -317,7 +338,7 @@ class PdfLabel extends \TCPDF
     /**
      * Print label as a TCPDF HTMLCell
      *
-     * @param string $html            
+     * @param string $html
      */
     public function addHtmlLabel($html)
     {
@@ -332,6 +353,9 @@ class PdfLabel extends \TCPDF
      */
     protected function newLabelPosition()
     {
+        // on a new page if enabled, draw cutlines
+        if ($this->xPosition == 0 && $this->cutLines)
+            $this->drawCutLines();
         $this->xPosition ++;
         if ($this->xPosition == $this->xNumber) {
             // Row full, we start a new one
@@ -351,5 +375,42 @@ class PdfLabel extends \TCPDF
             $this->labelWidth - (2 * $this->labelPadding),
             $this->labelHeight - (2 * $this->labelPadding)
         ];
+    }
+
+    protected function drawCutLines()
+    {
+        $style = array(
+            'width' => 0.3,
+            'cap' => 'butt',
+            'join' => 'miter',
+            'dash' => 0,
+            'color' => array(
+                200,
+                200,
+                200
+            )
+        );
+        
+        for ($i = 0; $i < $this->xNumber; $i ++) {
+            $x = $this->marginLeft + ($i * ($this->labelWidth + $this->xSpace));
+            // $this->Line($x, 0, $x, $this->getPageHeight(), $style);
+            $this->Line($x, 0, $x, $this->marginTop + 1, $style);
+            $this->Line($x, $this->getPageHeight() - $this->marginTop - 1, $x, $this->getPageHeight(), $style);
+            $x = $this->marginLeft + (($i + 1) * ($this->labelWidth + $this->xSpace)) - $this->xSpace;
+            // $this->Line($x, 0, $x, $this->getPageHeight(), $style);
+            $this->Line($x, 0, $x, $this->marginTop + 1, $style);
+            $this->Line($x, $this->getPageHeight() - $this->marginTop - 1, $x, $this->getPageHeight(), $style);
+        }
+        
+        for ($i = 0; $i < $this->yNumber; $i ++) {
+            $y = $this->marginTop + ($i * ($this->labelHeight + $this->ySpace));
+            // $this->Line(0, $y, $this->getPageWidth(), $y, $style);
+            $this->Line(0, $y, $this->marginLeft + 1, $y, $style);
+            $this->Line($this->getPageWidth() - $this->marginLeft - 1, $y, $this->getPageWidth(), $y, $style);
+            // $this->Line(0, $y, $this->getPageWidth(), $y, $style);
+            $y = $this->marginTop + (($i + 1) * ($this->labelHeight + $this->ySpace)) - $this->ySpace;
+            $this->Line(0, $y, $this->marginLeft + 1, $y, $style);
+            $this->Line($this->getPageWidth() - $this->marginLeft - 1, $y, $this->getPageWidth(), $y, $style);
+        }
     }
 }
