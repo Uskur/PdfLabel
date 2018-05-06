@@ -383,7 +383,7 @@ class PdfLabel extends \TCPDF
             'width' => 0.3,
             'cap' => 'butt',
             'join' => 'miter',
-            'dash' => 0,
+            'dash' => 1,
             'color' => array(
                 200,
                 200,
@@ -393,24 +393,36 @@ class PdfLabel extends \TCPDF
         
         for ($i = 0; $i < $this->xNumber; $i ++) {
             $x = $this->marginLeft + ($i * ($this->labelWidth + $this->xSpace));
-            // $this->Line($x, 0, $x, $this->getPageHeight(), $style);
-            $this->Line($x, 0, $x, $this->marginTop + 1, $style);
-            $this->Line($x, $this->getPageHeight() - $this->marginTop - 1, $x, $this->getPageHeight(), $style);
+            if ($this->cutLines == 's') {
+                $this->Line($x, 0, $x, $this->marginTop + 1, $style);
+                $this->Line($x, $this->getPageHeight() - $this->marginTop - 1, $x, $this->getPageHeight(), $style);
+            } else {
+                $this->Line($x, 0, $x, $this->getPageHeight(), $style);
+            }
             $x = $this->marginLeft + (($i + 1) * ($this->labelWidth + $this->xSpace)) - $this->xSpace;
-            // $this->Line($x, 0, $x, $this->getPageHeight(), $style);
-            $this->Line($x, 0, $x, $this->marginTop + 1, $style);
-            $this->Line($x, $this->getPageHeight() - $this->marginTop - 1, $x, $this->getPageHeight(), $style);
+            if ($this->cutLines == 's') {
+                $this->Line($x, 0, $x, $this->marginTop + 1, $style);
+                $this->Line($x, $this->getPageHeight() - $this->marginTop - 1, $x, $this->getPageHeight(), $style);
+            } else {
+                $this->Line($x, 0, $x, $this->getPageHeight(), $style);
+            }
         }
         
         for ($i = 0; $i < $this->yNumber; $i ++) {
             $y = $this->marginTop + ($i * ($this->labelHeight + $this->ySpace));
-            // $this->Line(0, $y, $this->getPageWidth(), $y, $style);
-            $this->Line(0, $y, $this->marginLeft + 1, $y, $style);
-            $this->Line($this->getPageWidth() - $this->marginLeft - 1, $y, $this->getPageWidth(), $y, $style);
-            // $this->Line(0, $y, $this->getPageWidth(), $y, $style);
+            if ($this->cutLines == 's') {
+                $this->Line(0, $y, $this->marginLeft + 1, $y, $style);
+                $this->Line($this->getPageWidth() - $this->marginLeft - 1, $y, $this->getPageWidth(), $y, $style);
+            } else {
+                $this->Line(0, $y, $this->getPageWidth(), $y, $style);
+            }
             $y = $this->marginTop + (($i + 1) * ($this->labelHeight + $this->ySpace)) - $this->ySpace;
-            $this->Line(0, $y, $this->marginLeft + 1, $y, $style);
-            $this->Line($this->getPageWidth() - $this->marginLeft - 1, $y, $this->getPageWidth(), $y, $style);
+            if ($this->cutLines == 's') {
+                $this->Line(0, $y, $this->marginLeft + 1, $y, $style);
+                $this->Line($this->getPageWidth() - $this->marginLeft - 1, $y, $this->getPageWidth(), $y, $style);
+            } else {
+                $this->Line(0, $y, $this->getPageWidth(), $y, $style);
+            }
         }
     }
 }
