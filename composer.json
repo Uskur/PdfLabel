@@ -4,7 +4,7 @@
     "require": {
         "tecnickcom/tcpdf": "^6.2"
     },
-    "license": "GPL",
+    "license": "GPL-3.0-or-later",
     "authors": [
         {
             "name": "Burak USGURLU",
