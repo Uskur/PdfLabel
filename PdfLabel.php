@@ -241,6 +241,19 @@ class PdfLabel extends \TCPDF
             'width' => 90,
             'height' => 55,
             'cutLines' => true
+        ),
+        '138x98' => array(
+            'paper-size' => 'A4',
+            'unit' => 'mm',
+            'marginLeft' => 7,
+            'marginTop' => 10.5,
+            'NX' => 2,
+            'NY' => 2,
+            'SpaceX' => 0,
+            'SpaceY' => 0,
+            'width' => 98,
+            'height' => 138,
+            'cutLines' => true
         )
     );
 
@@ -258,7 +271,7 @@ class PdfLabel extends \TCPDF
      * @param string $unit
      * @param number $posX
      * @param number $posY
-     * @throws Exception
+     * @throws \Exception
      */
     public function __construct($format, $unit = 'mm', $posX = 1, $posY = 1)
     {
@@ -310,7 +323,7 @@ class PdfLabel extends \TCPDF
      *
      * @param float $value
      * @param string $src
-     * @return number|unknown
+     * @return number
      */
     protected function convertUnit($value, $src)
     {
@@ -343,6 +356,18 @@ class PdfLabel extends \TCPDF
     public function addHtmlLabel($html)
     {
         list ($width, $height) = $this->newLabelPosition();
+        $this->writeHTMLCell($width, $height, null, null, $html);
+    }
+    
+    /**
+     * Print label as a TCPDF HTMLCell with a background image
+     *
+     * @param string $html
+     */
+    public function addHtmlLabelWithBackground($html, $backgroundImage)
+    {
+        list ($width, $height) = $this->newLabelPosition();
+        $this->Image($backgroundImage, $this->GetX() - $this->labelPadding, $this->GetY() - $this->labelPadding, $this->labelWidth, $this->labeHeight);
         $this->writeHTMLCell($width, $height, null, null, $html);
     }
 
