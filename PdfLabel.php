@@ -110,7 +110,7 @@ class PdfLabel extends \TCPDF
      */
     const LABELS = array(
         '5160' => array(
-            'paper-size' => 'letter',
+            'paper-size' => 'LETTER',
             'unit' => 'mm',
             'marginLeft' => 1.762,
             'marginTop' => 10.7,
@@ -122,7 +122,7 @@ class PdfLabel extends \TCPDF
             'height' => 25.4
         ),
         '5161' => array(
-            'paper-size' => 'letter',
+            'paper-size' => 'LETTER',
             'unit' => 'mm',
             'marginLeft' => 0.967,
             'marginTop' => 10.7,
@@ -134,7 +134,7 @@ class PdfLabel extends \TCPDF
             'height' => 25.4
         ),
         '5162' => array(
-            'paper-size' => 'letter',
+            'paper-size' => 'LETTER',
             'unit' => 'mm',
             'marginLeft' => 0.97,
             'marginTop' => 20.224,
@@ -146,7 +146,7 @@ class PdfLabel extends \TCPDF
             'height' => 35.72
         ),
         '5163' => array(
-            'paper-size' => 'letter',
+            'paper-size' => 'LETTER',
             'unit' => 'mm',
             'marginLeft' => 1.762,
             'marginTop' => 10.7,
@@ -158,7 +158,7 @@ class PdfLabel extends \TCPDF
             'height' => 50.8
         ),
         '5164' => array(
-            'paper-size' => 'letter',
+            'paper-size' => 'LETTER',
             'unit' => 'in',
             'marginLeft' => 0.148,
             'marginTop' => 0.5,
@@ -170,7 +170,7 @@ class PdfLabel extends \TCPDF
             'height' => 3.33
         ),
         '8600' => array(
-            'paper-size' => 'letter',
+            'paper-size' => 'LETTER',
             'unit' => 'mm',
             'marginLeft' => 7.1,
             'marginTop' => 19,
