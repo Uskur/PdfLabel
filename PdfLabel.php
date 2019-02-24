@@ -112,8 +112,8 @@ class PdfLabel extends \TCPDF
         '5160' => array(
             'paper-size' => 'LETTER',
             'unit' => 'mm',
-            'marginLeft' => 1.762,
-            'marginTop' => 10.7,
+            'marginLeft' => 4.7625,
+            'marginTop' => 12.7,
             'NX' => 3,
             'NY' => 10,
             'SpaceX' => 3.175,
