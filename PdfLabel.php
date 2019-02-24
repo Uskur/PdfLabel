@@ -367,7 +367,7 @@ class PdfLabel extends \TCPDF
     public function addHtmlLabelWithBackground($html, $backgroundImage)
     {
         list ($width, $height) = $this->newLabelPosition();
-        $this->Image($backgroundImage, $this->GetX() - $this->labelPadding, $this->GetY() - $this->labelPadding, $this->labelWidth, $this->labeHeight);
+        $this->Image($backgroundImage, $this->GetX() - $this->labelPadding, $this->GetY() - $this->labelPadding, $this->labelWidth, $this->labelHeight);
         $this->writeHTMLCell($width, $height, null, null, $html);
     }
 
