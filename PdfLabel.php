@@ -393,9 +393,9 @@ class PdfLabel extends \TCPDF
             }
         }
         
-        $_PosX = $this->marginLeft + $this->xPosition * ($this->labelWidth + $this->xSpace) + $this->labelPadding;
-        $_PosY = $this->marginTop + $this->yPosition * ($this->labelHeight + $this->ySpace) + $this->labelPadding;
-        $this->SetXY($_PosX, $_PosY);
+        $this->_PosX = $this->marginLeft + $this->xPosition * ($this->labelWidth + $this->xSpace) + $this->labelPadding;
+        $this->_PosY = $this->marginTop + $this->yPosition * ($this->labelHeight + $this->ySpace) + $this->labelPadding;
+        $this->SetXY($this->_PosX, $this->_PosY);
         return [
             $this->labelWidth - (2 * $this->labelPadding),
             $this->labelHeight - (2 * $this->labelPadding)
