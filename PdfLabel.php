@@ -97,6 +97,20 @@ class PdfLabel extends \TCPDF
     protected $yPosition;
 
     /**
+     * Current absolute X coordinate
+     *
+     * @var float
+     */
+    protected $_PosX;
+
+    /**
+     * Current absolute Y coordinate
+     *
+     * @var float
+     */
+    protected $_PosY;
+
+    /**
      * Cut lines enabled?
      *
      * @var boolean
