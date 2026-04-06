@@ -11,6 +11,44 @@ namespace Uskur\PdfLabel;
  */
 class PdfLabel extends \TCPDF
 {
+    /**
+     * Backward-compatible read access for legacy public property names.
+     *
+     * @param string $name
+     * @return float|null
+     */
+    public function __get($name)
+    {
+        if ($name === 'PosX') {
+            return $this->_PosX;
+        }
+
+        if ($name === 'PosY') {
+            return $this->_PosY;
+        }
+
+        trigger_error('Undefined property: ' . static::class . '::$' . $name, E_USER_NOTICE);
+        return null;
+    }
+
+    /**
+     * Preserve isset() semantics for legacy public property names.
+     *
+     * @param string $name
+     * @return bool
+     */
+    public function __isset($name)
+    {
+        if ($name === 'PosX') {
+            return isset($this->_PosX);
+        }
+
+        if ($name === 'PosY') {
+            return isset($this->_PosY);
+        }
+
+        return false;
+    }
 
     /**
      * Left margin of labels
